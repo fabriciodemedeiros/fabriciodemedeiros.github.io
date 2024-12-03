@@ -1,6 +1,6 @@
 // Fetch projects from GitHub API
 async function fetchProjects() {
-    const username = "fabricio"; // Substitua pelo seu username do GitHub
+    const username = "fasmedeiros"; // Substitua pelo seu username do GitHub
     const url = `https://api.github.com/users/${username}/repos?sort=updated`;
 
     try {
