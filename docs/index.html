@@ -1,15 +1,26 @@
-
 <!DOCTYPE html>
-<html>
-  <head>
-    <title>Documentação da API Fasil</title>
-    <meta charset="UTF-8" />
-    <script src="https://cdn.redoc.ly/redoc/latest/bundles/redoc.standalone.js"></script>
-    <style>
-      body { margin: 0; padding: 0; }
-    </style>
-  </head>
-  <body>
-    <redoc spec-url="auth.yaml"></redoc>
-  </body>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Documentação da API Fasil</title>
+  <link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
+</head>
+
+<body>
+  <div id="swagger-ui"></div>
+
+  <script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
+  <script>
+    window.onload = () => {
+        SwaggerUIBundle({
+          url: "auth.yaml", // ✅ substitua conforme seu repo/branch
+          dom_id: "#swagger-ui",
+          presets: [SwaggerUIBundle.presets.apis],
+          layout: "BaseLayout"
+        });
+      };
+  </script>
+</body>
+
 </html>
