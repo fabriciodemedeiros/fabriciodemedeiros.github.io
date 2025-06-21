@@ -1,7 +1,7 @@
-<!doctype html>
-<html lang="pt-br">
+<!DOCTYPE html>
+<html lang="pt-BR">
 <head>
-	<meta charset="utf-8" />
+	<meta charset="UTF-8" />
 	<title>Documentação da API i-Fasil</title>
 	<link rel="stylesheet" href="https://unpkg.com/swagger-ui-dist/swagger-ui.css" />
 	<!-- Bootstrap CSS -->
@@ -31,43 +31,48 @@
 	<div id="swagger-ui"></div>
 	<script src="https://unpkg.com/swagger-ui-dist/swagger-ui-bundle.js"></script>
 	<script>
-	// ✅ Lista dos YAMLs
-	const arquivosYaml = [
-		"https://raw.githubusercontent.com/fabriciodemedeiros/fabriciodemedeiros.github.io/refs/heads/main/docs/auth.yaml",
-		"https://raw.githubusercontent.com/fabriciodemedeiros/fabriciodemedeiros.github.io/refs/heads/main/docs/usuarios.yaml",
-		"https://raw.githubusercontent.com/fabriciodemedeiros/fabriciodemedeiros.github.io/refs/heads/main/docs/servidores.yaml"
+	const yamlFiles = [
+		"auth.yaml",
+		"usuarios.yaml",
+		"servidores.yaml"
+		// Add more if needed
 	];
-	let ui;
-	function inicializarSeletor() {
-		const seletor = document.getElementById('yaml-selector');
-		arquivosYaml.forEach(arquivo => {
+	const names = {
+		"auth.yaml": "Autenticação",
+		"usuarios.yaml": "Usuários",
+		"servidores.yaml": "Servidores"
+	};
+	let swaggerUIInstance;
+	function initializeSelector() {
+		const selector = document.getElementById('yaml-selector');
+		const baseUrl = "https://raw.githubusercontent.com/fabriciodemedeiros/fabriciodemedeiros.github.io/main/docs/";
+		yamlFiles.forEach(fileName => {
 			const option = document.createElement('option');
-		option.value = arquivo;
-		option.textContent = arquivo.split("/").pop();
-		seletor.appendChild(option);
+			option.value = baseUrl + fileName;
+			option.textContent = names[fileName] || fileName;
+			selector.appendChild(option);
 		});
-
-		if (arquivosYaml.length > 0) {
-			carregarSwagger(arquivosYaml[0]);
+		if (yamlFiles.length > 0) {
+			loadSwagger(baseUrl + yamlFiles[0]);
 		}
-		seletor.addEventListener('change', function () {
-			carregarSwagger(this.value);
+		selector.addEventListener('change', function () {
+			loadSwagger(this.value);
 		});
-    }
-    function carregarSwagger(arquivoYaml) {
-		if (ui) {
-			ui.specActions.updateUrl(arquivoYaml);
-			ui.specActions.download();
+	}
+	function loadSwagger(yamlUrl) {
+		if (swaggerUIInstance) {
+			swaggerUIInstance.specActions.updateUrl(yamlUrl);
+			swaggerUIInstance.specActions.download();
 		} else {
-			ui = SwaggerUIBundle({
-				url: arquivoYaml,
+			swaggerUIInstance = SwaggerUIBundle({
+				url: yamlUrl,
 				dom_id: '#swagger-ui',
 				presets: [SwaggerUIBundle.presets.apis],
 				layout: 'BaseLayout'
 			});
 		}
 	}
-    window.onload = inicializarSeletor;
+	window.onload = initializeSelector;
 	</script>
 
 </body>
