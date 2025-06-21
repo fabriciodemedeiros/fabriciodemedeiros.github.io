@@ -1,0 +1,70 @@
+openapi: 3.0.3
+info:
+  title: Autenticação - API Fasil
+  version: 1.0.0
+  description: >
+    API responsável pelo login de usuários e autenticação via JWT.
+    Esta documentação permite testar o endpoint real da API.
+servers:
+  - url: https://fasil.criarsite.online/api
+    description: Servidor principal da API Fasil
+
+paths:
+  /login:
+    post:
+      tags:
+        - Autenticação
+      summary: Login de usuário
+      description: Autentica o usuário e retorna um token JWT.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - senha
+              properties:
+                email:
+                  type: string
+                  format: email
+                  example: fabricio03121978@gmail.com
+                senha:
+                  type: string
+                  format: password
+                  example: 123456
+      responses:
+        '200':
+          description: Autenticado com sucesso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                  usuario:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 5
+                      nome:
+                        type: string
+                        example: Ana Oliveira
+                      email:
+                        type: string
+                        example: fabricio03121978@gmail.com
+        '401':
+          description: Falha na autenticação (credenciais inválidas)
+        '500':
+          description: Erro interno no servidor
+
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT

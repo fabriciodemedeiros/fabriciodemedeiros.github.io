@@ -1,0 +1,124 @@
+openapi: 3.0.3
+info:
+  title: Servidores - API Fasil
+  version: 1.0.0
+  description: Endpoints para o gerenciamento de servidores cadastrados.
+servers:
+  - url: https://api.fasil.criarsite.online
+paths:
+  /servidores:
+    get:
+      tags: [Servidores]
+      summary: Listar servidores
+      security:
+        - bearerAuth: []
+      responses:
+        '200':
+          description: Lista de servidores
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Servidor'
+    post:
+      tags: [Servidores]
+      summary: Criar novo servidor
+      security:
+        - bearerAuth: []
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServidorInput'
+      responses:
+        '201':
+          description: Servidor criado
+  /servidores/{id}:
+    get:
+      tags: [Servidores]
+      summary: Obter servidor por ID
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Servidor encontrado
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Servidor'
+    put:
+      tags: [Servidores]
+      summary: Atualizar servidor
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ServidorInput'
+      responses:
+        '200':
+          description: Servidor atualizado
+    delete:
+      tags: [Servidores]
+      summary: Remover servidor
+      security:
+        - bearerAuth: []
+      parameters:
+        - in: path
+          name: id
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Servidor excluído
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    Servidor:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 101
+        nome:
+          type: string
+          example: Servidor Principal
+        ip:
+          type: string
+          example: 192.168.0.10
+        status:
+          type: string
+          example: ativo
+    ServidorInput:
+      type: object
+      required:
+        - nome
+        - ip
+      properties:
+        nome:
+          type: string
+        ip:
+          type: string
+        status:
+          type: string
