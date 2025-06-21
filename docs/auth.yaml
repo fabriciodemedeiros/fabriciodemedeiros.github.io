@@ -35,6 +35,16 @@ paths:
                   format: password
                   example: 123456
       responses:
+        '400':
+          description: "Requisição malformada ou dados ausentes (ex: email ou senha)"
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    example: Email e senha são obrigatórios.
         '200':
           description: Autenticado com sucesso
           content:
