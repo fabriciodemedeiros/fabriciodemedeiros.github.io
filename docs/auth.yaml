@@ -10,7 +10,7 @@ servers:
     description: Servidor principal da API Fasil
 
 paths:
-  auth/login:
+  /auth/login:
     post:
       tags:
         - Autenticação
