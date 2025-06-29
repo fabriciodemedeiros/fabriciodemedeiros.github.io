@@ -4,7 +4,7 @@ document.getElementById("loginForm").addEventListener("submit", async function (
   const email = document.getElementById("email").value;
   const senha = document.getElementById("senha").value;
 
-  const resposta = await fetch("https://fasil.criarsite.online/api/login/", {
+  const resposta = await fetch("https://fasil.criarsite.online/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ email, senha })
